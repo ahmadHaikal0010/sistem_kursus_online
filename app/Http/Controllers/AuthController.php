@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -53,5 +54,14 @@ class AuthController extends Controller
         Auth::login($user);
 
         return redirect()->intended('/dashboard'); // Ganti sesuai kebutuhan
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

@@ -20,7 +20,8 @@ class EnrollmentFactory extends Factory
     {
         return [
             'user_id' => User::inRandomOrder()->first(),
-            'course_id' => Course::inRandomOrder()->first()
+            'course_id' => Course::inRandomOrder()->first(),
+            'enrolled_at' => now()
         ];
     }
 }

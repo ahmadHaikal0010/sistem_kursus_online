@@ -15,4 +15,9 @@ class Course extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
 }

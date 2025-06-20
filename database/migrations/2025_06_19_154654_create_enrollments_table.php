@@ -21,6 +21,7 @@ return new class extends Migration
                 table: 'courses',
                 indexName: 'enrollments_course_id'
             );
+            $table->timestamp('enrolled_at')->default(now());
             $table->timestamps();
         });
     }

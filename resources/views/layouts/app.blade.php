@@ -14,11 +14,25 @@
     <nav class="bg-white shadow">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="{{ url('/') }}" class="text-2xl font-bold text-blue-600">KursusOnline</a>
-            <div class="space-x-4">
-                <a href="{{ url('/') }}" class="text-gray-700 hover:text-blue-600">Home</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Courses</a>
-                <a href="{{ route('loginForm') }}" class="text-gray-700 hover:text-blue-600">Login</a>
-                <a href="{{ route('registerForm') }}" class="text-gray-700 hover:text-blue-600">Register</a>
+            <div class="space-x-4 flex items-center"> {{-- Tambahkan 'flex items-center' di sini untuk keselarasan vertikal --}}
+                @if (Auth::check())
+                    <a href="{{ url('dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                @else
+                    <a href="{{ url('/') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                @endif
+                <a href="{{ route('courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
+                @auth
+                    {{-- Tambahkan class 'inline-block' pada form --}}
+                    <form method="post" action="/logout" class="inline-block">
+                        @csrf
+                        {{-- Sesuaikan styling button dengan Tailwind CSS --}}
+                        <button type="submit" onclick="confirm('Are you sure?')"
+                            class="text-gray-700 hover:text-blue-600 focus:outline-none">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('loginForm') }}" class="text-gray-700 hover:text-blue-600">Login</a>
+                    <a href="{{ route('registerForm') }}" class="text-gray-700 hover:text-blue-600">Register</a>
+                @endauth
             </div>
         </div>
     </nav>
