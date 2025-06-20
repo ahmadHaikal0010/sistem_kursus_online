@@ -17,8 +17,8 @@
             <div class="space-x-4">
                 <a href="{{ url('/') }}" class="text-gray-700 hover:text-blue-600">Home</a>
                 <a href="#" class="text-gray-700 hover:text-blue-600">Courses</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Login</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Register</a>
+                <a href="{{ route('loginForm') }}" class="text-gray-700 hover:text-blue-600">Login</a>
+                <a href="{{ route('registerForm') }}" class="text-gray-700 hover:text-blue-600">Register</a>
             </div>
         </div>
     </nav>
