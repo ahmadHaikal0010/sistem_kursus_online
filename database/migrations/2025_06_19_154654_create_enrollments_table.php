@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollments', function (Blueprint $table) {
+        Schema::create('haikal_enrollments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained(
-                table: 'users',
+                table: 'haikal_users',
                 indexName: 'enrollments_user_id'
             );
             $table->foreignId('course_id')->constrained(
-                table: 'courses',
+                table: 'haikal_courses',
                 indexName: 'enrollments_course_id'
             );
             $table->timestamp('enrolled_at')->default(now());

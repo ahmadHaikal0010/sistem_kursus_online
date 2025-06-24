@@ -9,6 +9,8 @@ class Material extends Model
 {
     use HasFactory;
 
+    protected $table = 'haikal_materials';
+
     protected $fillable = ['course_id', 'title', 'content'];
 
     public function course()

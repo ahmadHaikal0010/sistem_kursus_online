@@ -11,6 +11,8 @@ class Enrollment extends Model
     /** @use HasFactory<\Database\Factories\EnrollmentFactory> */
     use HasFactory;
 
+    protected $table = 'haikal_enrollments';
+
     protected $fillable = ['course_id', 'enrolled_at'];
 
     public function course()

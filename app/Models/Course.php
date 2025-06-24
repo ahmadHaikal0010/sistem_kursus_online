@@ -11,6 +11,8 @@ class Course extends Model
     /** @use HasFactory<\Database\Factories\CourseFactory> */
     use HasFactory;
 
+    protected $table = 'haikal_courses';
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('haikal_materials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained(
-                table: 'courses',
+                table: 'haikal_courses',
                 indexName: 'materials_courses_id'
             );
             $table->string('title');
