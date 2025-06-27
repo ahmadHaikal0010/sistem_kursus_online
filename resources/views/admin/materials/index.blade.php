@@ -31,8 +31,13 @@
                     <div class="flex items-center space-x-4"> {{-- Container for actions, with spacing --}}
                         <a href="{{ route('admin.courses.materials.edit', [$course->id, $material->id]) }}"
                             class="text-sm text-indigo-600 hover:underline">Edit</a>
-                        <a href="#" onclick="return confirm('Are you sure to delete this material?');"
-                            class="text-sm text-red-600 hover:underline">Delete</a> {{-- Added Delete link --}}
+                        <form action="{{ route('admin.courses.materials.destroy', [$course->id, $material->id]) }}"
+                            method="POST" class="inline-block ml-3"
+                            onsubmit="return confirm('Yakin ingin menghapus materi ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-sm text-red-600 hover:underline">Hapus</button>
+                        </form>
                     </div>
                 </div>
             @empty

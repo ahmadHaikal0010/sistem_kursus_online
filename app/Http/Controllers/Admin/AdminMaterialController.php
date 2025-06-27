@@ -41,6 +41,7 @@ class AdminMaterialController extends Controller
         ];
 
         if ($request->type === 'video' && $request->hasFile('video_file')) {
+            // fungsi untuk mengembalikan path video dan menyimpan video ke direktori video
             $data['video_path'] = $request->file('video_file')->store('videos', 'public');
         }
 
@@ -50,18 +51,22 @@ class AdminMaterialController extends Controller
             ->with('success', 'Materi berhasil ditambahkan!');
     }
 
+    // menampilkan detail materi
     public function show(Course $course, Material $material)
     {
+        // cek apakah materi yang dirubah berkaitan dengan kursus
         abort_unless($material->course_id === $course->id, 404);
         return view('admin.materials.show', compact('course', 'material'));
     }
 
+    // menampilkan form edit materi
     public function edit(Course $course, Material $material)
     {
         abort_unless($material->course_id === $course->id, 404);
         return view('admin.materials.edit', compact('course', 'material'));
     }
 
+    // fungsi merubah data materi
     public function update(Request $request, Course $course, Material $material)
     {
         $request->validate([
@@ -88,5 +93,20 @@ class AdminMaterialController extends Controller
         $material->save();
 
         return redirect()->route('admin.courses.materials.index', $course->id)->with('success', 'Materi berhasil diperbarui!');
+    }
+
+    public function destroy(Course $course, Material $material)
+    {
+        // memastikan materi milik kursus yang dimaksud
+        abort_unless($material->course_id === $course->id, 404);
+
+        // hapus file video jika ada
+        if ($material->video_path && \Storage::disk('public')->exists($material->video_path)) {
+            \Storage::disk('public')->delete($material->video_path);
+        }
+
+        $material->delete();
+
+        return redirect()->route('admin.courses.materials.index', $course->id)->with('success', 'Materi berhasil dihapus.');
     }
 }

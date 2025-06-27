@@ -36,7 +36,8 @@ Route::middleware(['auth', RoleAdmin::class])->prefix('admin')->name('admin.')->
     Route::get('/courses/{course}/materials', [AdminMaterialController::class, 'index'])->name('courses.materials.index');
     Route::post('/courses/{course}/materials', [AdminMaterialController::class, 'store'])->name('courses.materials.store');
     Route::get('/courses/{course}/materials/create', [AdminMaterialController::class, 'create'])->name('courses.materials.create');
-    Route::get('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'show'])->name('courses.materials.show');
     Route::get('/courses/{course}/materials/{material}/edit', [AdminMaterialController::class, 'edit'])->name('courses.materials.edit');
-    Route::post('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'update'])->name('courses.materials.update');
+    Route::get('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'show'])->name('courses.materials.show');
+    Route::put('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'update'])->name('courses.materials.update');
+    Route::delete('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'destroy'])->name('courses.materials.destroy');
 });
