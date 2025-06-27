@@ -18,8 +18,8 @@ return new class extends Migration
                 indexName: 'materials_courses_id'
             );
             $table->string('title');
-            $table->text('content');
             $table->enum('type', ['text', 'video', 'link'])->default('text');
+            $table->text('content')->nullable();
             $table->string('video_path')->nullable(); // untuk upload
             $table->string('video_link')->nullable(); // untuk link YouTube
             $table->timestamps();

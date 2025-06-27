@@ -34,6 +34,7 @@ Route::middleware(['auth', RoleAdmin::class])->prefix('admin')->name('admin.')->
 
     Route::resource('/courses', AdminCourseController::class);
     Route::get('/courses/{course}/materials', [AdminMaterialController::class, 'index'])->name('courses.materials.index');
-    Route::get('/courses/{course}/materials/create', [AdminMaterialController::class, 'create'])->name('courses.materials.create');
     Route::post('/courses/{course}/materials', [AdminMaterialController::class, 'store'])->name('courses.materials.store');
+    Route::get('/courses/{course}/materials/create', [AdminMaterialController::class, 'create'])->name('courses.materials.create');
+    Route::get('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'show'])->name('courses.materials.show');
 });

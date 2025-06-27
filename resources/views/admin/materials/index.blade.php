@@ -20,13 +20,20 @@
 
         <div class="bg-white rounded-xl shadow divide-y">
             @forelse ($materials as $material)
-                <div class="p-4">
-                    <h2 class="text-lg font-semibold">{{ $material->title }}</h2>
-                    <p class="text-gray-600 mt-1 whitespace-pre-line">{{ Str::limit($material->content, 150) }}</p>
+                <div class="p-4 hover:bg-gray-50">
+                    <a href="{{ route('admin.courses.materials.show', [$course->id, $material->id]) }}"
+                        class="text-lg font-semibold text-blue-700 hover:underline">
+                        {{ $material->title }}
+                    </a>
+                    <p class="text-gray-600 text-sm mt-1">Tipe: {{ ucfirst($material->type) }}</p>
                 </div>
             @empty
                 <div class="p-4 text-gray-600">Belum ada materi untuk kursus ini.</div>
             @endforelse
+        </div>
+
+        <div class="mt-6">
+            {{ $materials->links('vendor.pagination.tailwind') }}
         </div>
     </div>
 @endsection

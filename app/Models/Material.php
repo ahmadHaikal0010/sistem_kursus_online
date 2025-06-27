@@ -11,7 +11,7 @@ class Material extends Model
 
     protected $table = 'haikal_materials';
 
-    protected $fillable = ['course_id', 'title', 'content'];
+    protected $fillable = ['course_id', 'title', 'type', 'content', 'video_path', 'video_link'];
 
     public function course()
     {

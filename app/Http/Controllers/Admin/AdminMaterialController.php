@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Material;
 use Illuminate\Http\Request;
 
 class AdminMaterialController extends Controller
@@ -11,7 +12,7 @@ class AdminMaterialController extends Controller
     // list materi
     public function index(Course $course)
     {
-        $materials = $course->materials;
+        $materials = $course->materials()->latest()->paginate(10);
         return view('admin.materials.index', compact('course', 'materials'));
     }
 
@@ -28,23 +29,30 @@ class AdminMaterialController extends Controller
             'title' => 'required|string|max:255',
             'type' => 'required|in:text,video,link',
             'content' => 'nullable|required_if:type,text|string',
-            'video_path' => 'nullable|required_if:type,video|file|mimes:mp4|max:102400',
-            'video_link' => 'nullable|required_if:type,link|url'
+            'video_file' => 'nullable|required_if:type,video|file|mimes:mp4|max:51200', // max 50MB
+            'video_link' => 'nullable|required_if:type,link|url',
         ]);
 
         $data = [
             'title' => $request->title,
             'type' => $request->type,
             'content' => $request->type === 'text' ? $request->content : null,
-            'video_link' => $request->type === 'link' ? $request->video_link : null
+            'video_link' => $request->type === 'link' ? $request->video_link : null,
         ];
 
-        if ($request->type === 'video' && $request->hasFile('video_path')) {
-            $data['video_path'] = $request->file('video_path')->store('videos', 'public');
+        if ($request->type === 'video' && $request->hasFile('video_file')) {
+            $data['video_path'] = $request->file('video_file')->store('videos', 'public');
         }
 
         $course->materials()->create($data);
 
-        return redirect()->route('admin.courses.materials.index', $course->id)->with('success', 'Materi berhasil ditambahkan!');
+        return redirect()->route('admin.courses.materials.index', $course->id)
+            ->with('success', 'Materi berhasil ditambahkan!');
+    }
+
+    public function show(Course $course, Material $material)
+    {
+        abort_unless($material->course_id === $course->id, 404);
+        return view('admin.materials.show', compact('course', 'material'));
     }
 }
