@@ -24,12 +24,18 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // arahkan setelah login
+            $user = Auth::user();
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->intended('dashboardAdmin');
+                case 'siswa':
+                    return redirect()->intended('dashboard');
+                default:
+                    return back()->withErrors([
+                        'email' => 'Email atau password salah.',
+                    ])->onlyInput('email');
+            }
         }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
     }
 
     public function registerForm()

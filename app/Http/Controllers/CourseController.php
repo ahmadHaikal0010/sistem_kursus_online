@@ -44,7 +44,7 @@ class CourseController extends Controller
         return view('courses.show', compact('course', 'enrolled'));
     }
 
-    public function material($id)
+    public function materials($id)
     {
         $user = Auth::user();
 
