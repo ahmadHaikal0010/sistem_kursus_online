@@ -20,12 +20,20 @@
 
         <div class="bg-white rounded-xl shadow divide-y">
             @forelse ($materials as $material)
-                <div class="p-4 hover:bg-gray-50">
-                    <a href="{{ route('admin.courses.materials.show', [$course->id, $material->id]) }}"
-                        class="text-lg font-semibold text-blue-700 hover:underline">
-                        {{ $material->title }}
-                    </a>
-                    <p class="text-gray-600 text-sm mt-1">Tipe: {{ ucfirst($material->type) }}</p>
+                <div class="p-4 hover:bg-gray-50 flex items-center justify-between"> {{-- Added flex classes here --}}
+                    <div>
+                        <a href="{{ route('admin.courses.materials.show', [$course->id, $material->id]) }}"
+                            class="text-lg font-semibold text-blue-700 hover:underline">
+                            {{ $material->title }}
+                        </a>
+                        <p class="text-gray-600 text-sm mt-1">Tipe: {{ ucfirst($material->type) }}</p>
+                    </div>
+                    <div class="flex items-center space-x-4"> {{-- Container for actions, with spacing --}}
+                        <a href="{{ route('admin.courses.materials.edit', [$course->id, $material->id]) }}"
+                            class="text-sm text-indigo-600 hover:underline">Edit</a>
+                        <a href="#" onclick="return confirm('Are you sure to delete this material?');"
+                            class="text-sm text-red-600 hover:underline">Delete</a> {{-- Added Delete link --}}
+                    </div>
                 </div>
             @empty
                 <div class="p-4 text-gray-600">Belum ada materi untuk kursus ini.</div>

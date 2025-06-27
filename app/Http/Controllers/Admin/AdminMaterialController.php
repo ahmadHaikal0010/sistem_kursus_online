@@ -55,4 +55,38 @@ class AdminMaterialController extends Controller
         abort_unless($material->course_id === $course->id, 404);
         return view('admin.materials.show', compact('course', 'material'));
     }
+
+    public function edit(Course $course, Material $material)
+    {
+        abort_unless($material->course_id === $course->id, 404);
+        return view('admin.materials.edit', compact('course', 'material'));
+    }
+
+    public function update(Request $request, Course $course, Material $material)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:text,video,link',
+            'content' => 'nullable|required_if:type,text|string',
+            'video_file' => 'nullable|required_if:type,video|file|mimes:mp4|max:51200',
+            'video_link' => 'nullable|required_if:type,link|url'
+        ]);
+
+        $material->title = $request->title;
+        $material->type = $request->type;
+        $material->content = $request->type === 'text' ? $request->content : null;
+        $material->video_link = $request->type === 'link' ? $request->video_link : null;
+
+        if ($request->type === 'video' && $request->hasFile('video_file')) {
+            // hapus video lama
+            if ($material->video_path && \Storage::disk('public')->exists($material->video_path)) {
+                \Storage::disk('public')->delete($material->video_path);
+            }
+            $material->video_path = $request->file('video_file')->store('videos', 'public');
+        }
+
+        $material->save();
+
+        return redirect()->route('admin.courses.materials.index', $course->id)->with('success', 'Materi berhasil diperbarui!');
+    }
 }
