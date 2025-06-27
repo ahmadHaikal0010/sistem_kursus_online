@@ -27,9 +27,9 @@ class AuthController extends Controller
             $user = Auth::user();
             switch ($user->role) {
                 case 'admin':
-                    return redirect()->intended('dashboardAdmin');
+                    return redirect()->intended(route('admin.dashboard'));
                 case 'siswa':
-                    return redirect()->intended('dashboard');
+                    return redirect()->intended(route('dashboard'));
                 default:
                     return back()->withErrors([
                         'email' => 'Email atau password salah.',

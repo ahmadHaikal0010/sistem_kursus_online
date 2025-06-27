@@ -21,6 +21,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach ($courses as $course)
                 <div class="bg-white shadow rounded-xl p-4">
+                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}"
+                        class="rounded-lg mb-3 h-40 w-full object-cover">
                     <h2 class="text-xl font-semibold">{{ $course->title }}</h2>
                     <p class="text-sm text-gray-500">{{ $course->category->name }}</p>
                     <p class="mt-2 text-gray-700">{{ Str::limit($course->description, 100) }}</p>

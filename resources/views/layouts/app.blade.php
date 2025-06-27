@@ -26,7 +26,7 @@
                     <form method="post" action="/logout" class="inline-block">
                         @csrf
                         {{-- Sesuaikan styling button dengan Tailwind CSS --}}
-                        <button type="submit" onclick="confirm('Are you sure?')"
+                        <button type="submit" onclick="return confirm('Are you sure?')"
                             class="text-gray-700 hover:text-blue-600 focus:outline-none">Logout</button>
                     </form>
                 @else

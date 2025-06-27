@@ -12,7 +12,8 @@
         </div>
 
         <div class="mt-6">
-            <a href="" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            <a href="{{ route('admin.courses.index') }}"
+                class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 Kelola Kursus
             </a>
         </div>

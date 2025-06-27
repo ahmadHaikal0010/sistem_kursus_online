@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\EnrollmentController;
 use App\Http\Middleware\RoleAdmin;
 use App\Http\Middleware\RoleSiswa;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\Admin\AdminCourseController;
+use App\Http\Controllers\Admin\AdminMaterialController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 Route::get('/', [CourseController::class, 'index']);
 
@@ -27,11 +29,11 @@ Route::get('/courses/{id}', [CourseController::class, 'show'])->name('show');
 
 Route::get('/courses/{id}/material', [CourseController::class, 'materials'])->middleware('auth')->name('materials');
 
-Route::middleware(['auth', RoleAdmin::class])->name('admin.')->group(function () {
-    Route::get('/dashboardAdmin', [AdminController::class, 'dashboard'])->name('dashboardAdmin');
+Route::middleware(['auth', RoleAdmin::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('/listcourses', AdminController::class);
-    Route::get('/courses/{course}/materials', [AdminController::class, 'index'])->name('courses.materials.index');
-    Route::get('/courses/{course}/materials/create', [AdminController::class, 'create'])->name('courses.materials.create');
-    Route::post('/courses/{course}/materials', [AdminController::class, 'store'])->name('courses.materials.store');
+    Route::resource('/courses', AdminCourseController::class);
+    Route::get('/courses/{course}/materials', [AdminMaterialController::class, 'index'])->name('courses.materials.index');
+    Route::get('/courses/{course}/materials/create', [AdminMaterialController::class, 'create'])->name('courses.materials.create');
+    Route::post('/courses/{course}/materials', [AdminMaterialController::class, 'store'])->name('courses.materials.store');
 });

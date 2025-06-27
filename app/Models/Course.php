@@ -11,6 +11,8 @@ class Course extends Model
     /** @use HasFactory<\Database\Factories\CourseFactory> */
     use HasFactory;
 
+    protected $fillable = ['title', 'category_id', 'description', 'thumbnail'];
+
     protected $table = 'haikal_courses';
 
     public function category(): BelongsTo
