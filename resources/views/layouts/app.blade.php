@@ -16,11 +16,18 @@
             <a href="{{ url('/') }}" class="text-2xl font-bold text-blue-600">KursusOnline</a>
             <div class="space-x-4 flex items-center"> {{-- Tambahkan 'flex items-center' di sini untuk keselarasan vertikal --}}
                 @if (Auth::check())
-                    <a href="{{ url('dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                    @can('admin')
+                        <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                        <a href="{{ route('admin.courses.index') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
+                    @endcan
+                    @can('siswa')
+                        <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                        <a href="{{ route('courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
+                    @endcan
                 @else
                     <a href="{{ url('/') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="{{ route('courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
                 @endif
-                <a href="{{ route('courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
                 @auth
                     {{-- Tambahkan class 'inline-block' pada form --}}
                     <form method="post" action="/logout" class="inline-block">

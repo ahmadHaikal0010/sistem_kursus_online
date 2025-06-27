@@ -24,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useTailwind();
 
-        Gate::define('login', function (Model $user) {
+        Gate::define('admin', function (Model $user) {
             return $user->role === 'admin';
+        });
+
+        Gate::define('siswa', function (Model $user) {
+            return $user->role === 'siswa';
         });
     }
 }

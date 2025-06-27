@@ -19,6 +19,9 @@ return new class extends Migration
             );
             $table->string('title');
             $table->text('content');
+            $table->enum('type', ['text', 'video', 'link'])->default('text');
+            $table->string('video_path')->nullable(); // untuk upload
+            $table->string('video_link')->nullable(); // untuk link YouTube
             $table->timestamps();
         });
     }
