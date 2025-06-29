@@ -5,7 +5,6 @@ use App\Http\Middleware\RoleSiswa;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -29,7 +28,7 @@ Route::middleware(['auth', RoleSiswa::class])->prefix('student')->name('student.
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/courses', [CourseController::class, 'index'])->name('courses');
-    Route::post('/courses/{id}/enroll', [EnrollmentController::class, 'enroll'])->name('courses.enroll');
+    Route::post('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
     Route::get('/courses/{course}/materials', [StudentMaterialController::class, 'index'])->name('materials.index');
     Route::get('/courses/{course}/materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
 });

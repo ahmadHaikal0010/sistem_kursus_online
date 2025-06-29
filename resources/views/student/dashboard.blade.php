@@ -3,25 +3,32 @@
 @section('title', 'Dashboard Siswa')
 
 @section('content')
-    <div class="container mx-auto px-4 py-10">
-        <h1 class="text-3xl font-bold mb-6">Selamat datang, {{ Auth::user()->name }}!</h1>
+    <div class="container mx-auto px-4 py-10 max-w-5xl">
+        <h1 class="text-2xl font-bold mb-6">Dashboard Siswa</h1>
 
-        <h2 class="text-xl font-semibold mb-4">Kursus yang Kamu Ikuti</h2>
+        @forelse ($progressData as $data)
+            <div class="mb-6 p-4 bg-white shadow rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        {{ $data['course']->title }}
+                    </h2>
+                    <a href="{{ route('student.materials.index', $data['course']->id) }}"
+                        class="text-blue-600 text-sm hover:underline">Lihat Materi</a>
+                </div>
 
-        @if ($courses->isEmpty())
-            <p class="text-gray-600">Kamu belum mendaftar kursus apa pun.</p>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($courses as $enrollment)
-                    <div class="bg-white rounded-xl shadow p-4">
-                        <h3 class="text-lg font-semibold">{{ $enrollment->course->title }}</h3>
-                        <p class="text-sm text-gray-500">{{ $enrollment->course->category->name }}</p>
-                        <p class="mt-2 text-gray-700">{{ Str::limit($enrollment->course->description, 100) }}</p>
-                        <a href="{{ route('student.materials.index', $enrollment->course->id) }}"
-                            class="text-blue-600 hover:underline mt-3 inline-block">Lihat Materi</a>
-                    </div>
-                @endforeach
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-1">
+                    <div class="bg-green-500 h-4 rounded-full" style="width: {{ $data['progress'] }}%;"></div>
+                </div>
+                <p class="text-sm text-gray-600">
+                    {{ $data['completed'] }} dari {{ $data['total'] }} materi selesai ({{ $data['progress'] }}%)
+                </p>
             </div>
-        @endif
+        @empty
+            <div class="text-gray-600">Anda belum mengikuti kursus apapun.</div>
+        @endforelse
+        <!-- PAGINATION -->
+        <div class="mt-6">
+            {{ $courses->links('vendor.pagination.tailwind') }}
+        </div>
     </div>
 @endsection

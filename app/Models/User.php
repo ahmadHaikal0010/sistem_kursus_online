@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Enrollment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,11 +48,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function enrollments()
-    {
-        return $this->hasMany(Enrollment::class);
-    }
-
     public function isAdmin()
     {
         return $this->role === 'admin';
@@ -62,5 +56,10 @@ class User extends Authenticatable
     public function readMaterials()
     {
         return $this->belongsToMany(Material::class)->withTimestamps();
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)->withTimestamps();
     }
 }

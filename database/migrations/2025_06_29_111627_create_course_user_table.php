@@ -9,28 +9,28 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('haikal_enrollments', function (Blueprint $table) {
+        Schema::create('course_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained(
                 table: 'haikal_users',
-                indexName: 'enrollments_user_id'
+                indexName: 'course_user_user_id'
             );
             $table->foreignId('course_id')->constrained(
                 table: 'haikal_courses',
-                indexName: 'enrollments_course_id'
+                indexName: 'course_course_id'
             );
-            $table->timestamp('enrolled_at')->default(now());
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('enrollments');
+        Schema::dropIfExists('course_user');
     }
 };

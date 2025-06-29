@@ -11,7 +11,9 @@ class CourseController extends Controller
     {
         $courses = Course::with('category')->latest()->paginate(9);
         $user = Auth::user();
-        $enrolledCourseIds = $user ? $user->enrollments()->pluck('course_id')->toArray() : [];
+
+        // Ambil course_id yang sudah diikuti oleh user
+        $enrolledCourseIds = $user ? $user->courses()->pluck('course_id')->toArray() : [];
 
         return view('student.courses.index', compact('courses', 'enrolledCourseIds'));
     }
@@ -24,9 +26,21 @@ class CourseController extends Controller
         $enrolled = false;
 
         if ($user) {
-            $enrolled = $user->enrollments()->where('course_id', $id)->exists();
+            $enrolled = $user->courses()->where('course_id', $id)->exists();
         }
 
         return view('public.courses.show', compact('course', 'enrolled'));
+    }
+
+    public function enroll(Course $course)
+    {
+        $user = auth()->user();
+
+        if (!$user->courses->contains($course->id)) {
+            $user->courses()->attach($course->id);
+        }
+
+        return redirect()->route('student.materials.index', $course->id)
+            ->with('success', 'Berhasil bergabung ke kursus!');
     }
 }

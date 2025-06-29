@@ -20,29 +20,23 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach ($courses as $course)
-                <div class="bg-white shadow rounded-xl p-4">
-                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}"
-                        class="rounded-lg mb-3 h-40 w-full object-cover">
+                <div class="bg-white p-4 shadow rounded mb-4">
                     <h2 class="text-xl font-semibold">{{ $course->title }}</h2>
-                    <p class="text-sm text-gray-500">{{ $course->category->name }}</p>
-                    <p class="mt-2 text-gray-700">{{ Str::limit($course->description, 100) }}</p>
+                    <p class="text-gray-600">{{ $course->description }}</p>
 
-                    @auth
-                        @if (in_array($course->id, $enrolledCourseIds))
-                            <button class="mt-4 bg-gray-300 text-gray-600 px-4 py-2 rounded cursor-not-allowed" disabled>
-                                Sudah Terdaftar
+                    @if (!auth()->user()->courses->contains($course->id))
+                        <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST" class="mt-2">
+                            @csrf
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Gabung Kursus
                             </button>
-                        @else
-                            <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST" class="mt-4">
-                                @csrf
-                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                                    Daftar Kursus
-                                </button>
-                            </form>
-                        @endif
-                    @endauth
+                        </form>
+                    @else
+                        <p class="text-green-600 mt-2">Sudah tergabung</p>
+                    @endif
                 </div>
             @endforeach
+
         </div>
         <!-- PAGINATION -->
         <div class="mt-6">
