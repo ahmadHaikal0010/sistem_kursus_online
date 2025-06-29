@@ -13,14 +13,6 @@ class CourseController extends Controller
         return view('home', compact('courses'));
     }
 
-    public function dashboard()
-    {
-        $user = Auth::user();
-        $courses = $user->enrollments()->with('course.category')->latest()->get();
-
-        return view('student.dashboard', compact('courses'));
-    }
-
     public function courses()
     {
         $courses = Course::with('category')->latest()->get();

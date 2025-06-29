@@ -21,7 +21,7 @@
                         <a href="{{ route('admin.courses.index') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
                     @endcan
                     @can('siswa')
-                        <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+                        <a href="{{ route('student.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
                         <a href="{{ route('courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
                     @endcan
                 @else
