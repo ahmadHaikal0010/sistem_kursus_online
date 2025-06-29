@@ -33,7 +33,7 @@
                                 Sudah Terdaftar
                             </button>
                         @else
-                            <form action="{{ route('enroll', $course->id) }}" method="POST" class="mt-4">
+                            <form action="{{ route('student.enroll', $course->id) }}" method="POST" class="mt-4">
                                 @csrf
                                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                                     Daftar Kursus

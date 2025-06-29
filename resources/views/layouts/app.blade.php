@@ -22,7 +22,7 @@
                     @endcan
                     @can('siswa')
                         <a href="{{ route('student.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
-                        <a href="{{ route('courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
+                        <a href="{{ route('student.courses') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
                     @endcan
                 @else
                     <a href="{{ url('/') }}" class="text-gray-700 hover:text-blue-600">Home</a>

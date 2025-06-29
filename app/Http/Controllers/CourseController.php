@@ -7,19 +7,19 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function index()
-    {
-        $courses = Course::with('category')->latest()->take(10)->get();
-        return view('home', compact('courses'));
-    }
+    // public function index()
+    // {
+    //     $courses = Course::with('category')->latest()->take(10)->get();
+    //     return view('home', compact('courses'));
+    // }
 
-    public function courses()
+    public function index()
     {
         $courses = Course::with('category')->latest()->get();
         $user = Auth::user();
         $enrolledCourseIds = $user ? $user->enrollments()->pluck('course_id')->toArray() : [];
 
-        return view('courses.index', compact('courses', 'enrolledCourseIds'));
+        return view('public.courses.index', compact('courses', 'enrolledCourseIds'));
     }
 
     public function show($id)
@@ -33,7 +33,7 @@ class CourseController extends Controller
             $enrolled = $user->enrollments()->where('course_id', $id)->exists();
         }
 
-        return view('courses.show', compact('course', 'enrolled'));
+        return view('public.courses.show', compact('course', 'enrolled'));
     }
 
     public function materials($id)
