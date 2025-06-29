@@ -5,12 +5,13 @@ use App\Http\Middleware\RoleSiswa;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PublicCourseController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\PublicCourseController;
-use App\Http\Controllers\student\StudentDashboardController;
+use App\Http\Controllers\Admin\UserEnrollmentController;
 use App\Http\Controllers\student\StudentMaterialController;
+use App\Http\Controllers\student\StudentDashboardController;
 
 Route::get('/', [PublicCourseController::class, 'index']);
 
@@ -37,6 +38,7 @@ Route::middleware(['auth', RoleAdmin::class])->prefix('admin')->name('admin.')->
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('/courses', AdminCourseController::class);
+    Route::get('/users/enrollments', [UserEnrollmentController::class, 'index'])->name('users.enrollments');
     Route::get('/courses/{course}/materials', [AdminMaterialController::class, 'index'])->name('courses.materials.index');
     Route::post('/courses/{course}/materials', [AdminMaterialController::class, 'store'])->name('courses.materials.store');
     Route::get('/courses/{course}/materials/create', [AdminMaterialController::class, 'create'])->name('courses.materials.create');

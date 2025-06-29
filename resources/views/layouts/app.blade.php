@@ -19,6 +19,9 @@
                     @can('admin')
                         <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
                         <a href="{{ route('admin.courses.index') }}" class="text-gray-700 hover:text-blue-600">Courses</a>
+                        <a href="{{ route('admin.users.enrollments') }}" class="text-gray-700 hover:text-blue-600">
+                            Lihat Enrollments
+                        </a>
                     @endcan
                     @can('siswa')
                         <a href="{{ route('student.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
