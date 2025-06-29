@@ -17,4 +17,9 @@ class Material extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function readers()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

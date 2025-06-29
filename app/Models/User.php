@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function readMaterials()
+    {
+        return $this->belongsToMany(Material::class)->withTimestamps();
+    }
 }
