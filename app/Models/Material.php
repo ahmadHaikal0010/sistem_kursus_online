@@ -20,6 +20,6 @@ class Material extends Model
 
     public function readers()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class, 'haikal_material_user')->withTimestamps();
     }
 }

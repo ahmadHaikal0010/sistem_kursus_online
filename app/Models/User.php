@@ -55,11 +55,11 @@ class User extends Authenticatable
 
     public function readMaterials()
     {
-        return $this->belongsToMany(Material::class)->withTimestamps();
+        return $this->belongsToMany(Material::class, 'haikal_material_user')->withTimestamps();
     }
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class)->withTimestamps();
+        return $this->belongsToMany(Course::class, 'haikal_course_user')->withTimestamps();
     }
 }

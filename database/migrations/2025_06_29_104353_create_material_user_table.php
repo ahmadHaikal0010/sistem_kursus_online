@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('material_user', function (Blueprint $table) {
+        Schema::create('haikal_material_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained(
                 table: 'haikal_users',
@@ -19,7 +19,7 @@ return new class extends Migration
             );
             $table->foreignId('material_id')->constrained(
                 table: 'haikal_materials',
-                indexName: 'material_material_id'
+                indexName: 'material_user_material_id'
             );
             $table->timestamps();
         });
