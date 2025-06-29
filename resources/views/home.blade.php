@@ -15,7 +15,8 @@
                     <h2 class="text-xl font-semibold text-center">{{ $course->title }}</h2>
                     <span class="text-sm text-gray-500 block text-center">{{ $course->category->name }}</span>
                     <p class="mt-2 text-gray-700 text-center flex-grow">{{ Str::limit($course->description, 100) }}</p>
-                    <a href="#" class="inline-block mt-3 text-blue-500 hover:underline text-center">Lihat Detail</a>
+                    <a href="{{ route('courses.show', $course->id) }}"
+                        class="inline-block mt-3 text-blue-500 hover:underline text-center">Lihat Detail</a>
                 </div>
             @endforeach
         </div>

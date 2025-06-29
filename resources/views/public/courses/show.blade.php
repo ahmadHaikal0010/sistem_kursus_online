@@ -10,12 +10,12 @@
 
         @auth
             @if ($enrolled)
-                <a href="{{ route('courses.materials', $course->id) }}"
+                <a href="{{ route('student.courses.materials', $course->id) }}"
                     class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">
                     Lihat Materi Kursus
                 </a>
             @else
-                <form action="{{ route('courses.enroll', $course->id) }}" method="POST">
+                <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
                         Daftar Kursus

@@ -28,10 +28,18 @@
                     <p class="mt-2 text-gray-700">{{ Str::limit($course->description, 100) }}</p>
 
                     @auth
-                    @else
-                        <a href="{{ route('login') }}" class="inline-block mt-4 text-blue-600 hover:underline">
-                            Login untuk daftar
-                        </a>
+                        @if (in_array($course->id, $enrolledCourseIds))
+                            <button class="mt-4 bg-gray-300 text-gray-600 px-4 py-2 rounded cursor-not-allowed" disabled>
+                                Sudah Terdaftar
+                            </button>
+                        @else
+                            <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST" class="mt-4">
+                                @csrf
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                    Daftar Kursus
+                                </button>
+                            </form>
+                        @endif
                     @endauth
                 </div>
             @endforeach

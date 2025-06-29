@@ -29,7 +29,7 @@ class AuthController extends Controller
                 case 'admin':
                     return redirect()->intended(route('admin.dashboard'));
                 case 'siswa':
-                    return redirect()->intended(route('dashboard'));
+                    return redirect()->intended(route('student.dashboard'));
                 default:
                     return back()->withErrors([
                         'email' => 'Email atau password salah.',
