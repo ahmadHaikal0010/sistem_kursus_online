@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
-            'password' => ['required'],
+            'password' => ['required', 'min:6'],
         ]);
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
@@ -32,10 +32,16 @@ class AuthController extends Controller
                     return redirect()->intended(route('student.dashboard'));
                 default:
                     return back()->withErrors([
-                        'email' => 'Email atau password salah.',
+                        'email' => 'Email atau password tidak valid (default).', // Pesan error lebih jelas
                     ])->onlyInput('email');
             }
         }
+
+        // dd('Auth attempt failed!');
+
+        return back()->withErrors([
+            'email' => 'Email atau password yang Anda masukkan salah.', // Pesan error yang akan ditampilkan
+        ])->onlyInput('email');
     }
 
     public function registerForm()
