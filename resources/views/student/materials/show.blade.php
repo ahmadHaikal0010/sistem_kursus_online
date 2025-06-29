@@ -31,5 +31,23 @@
                 &larr; Kembali ke Daftar Materi
             </a>
         </div>
+        <div class="mt-10 flex justify-between items-center">
+            @if ($previous)
+                <a href="{{ route('student.materials.show', [$course->id, $previous->id]) }}"
+                    class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300">
+                    &larr; {{ Str::limit($previous->title, 20) }}
+                </a>
+            @else
+                <div></div>
+            @endif
+
+            @if ($next)
+                <a href="{{ route('student.materials.show', [$course->id, $next->id]) }}"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    {{ Str::limit($next->title, 20) }} &rarr;
+                </a>
+            @endif
+        </div>
+
     </div>
 @endsection

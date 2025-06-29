@@ -10,7 +10,7 @@ class StudentMaterialController extends Controller
 {
     public function index(Course $course)
     {
-        $materials = $course->materials()->orderBy('id')->paginate(10);
+        $materials = $course->materials()->orderBy('id', 'asc')->paginate(10);
 
         return view('student.materials.index', compact('course', 'materials'));
     }
@@ -19,6 +19,9 @@ class StudentMaterialController extends Controller
     {
         abort_unless($material->course_id === $course->id, 404);
 
-        return view('student.materials.show', compact('course', 'material'));
+        $previous = $course->materials()->where('id', '<', $material->id)->orderBy('id', 'desc')->first();
+        $next = $course->materials()->where('id', '>', $material->id)->orderBy('id', 'asc')->first();
+
+        return view('student.materials.show', compact('course', 'material', 'previous', 'next'));
     }
 }
