@@ -17,7 +17,7 @@
                         <h3 class="text-lg font-semibold">{{ $enrollment->course->title }}</h3>
                         <p class="text-sm text-gray-500">{{ $enrollment->course->category->name }}</p>
                         <p class="mt-2 text-gray-700">{{ Str::limit($enrollment->course->description, 100) }}</p>
-                        <a href="{{ route('student.courses.materials', $enrollment->course->id) }}"
+                        <a href="{{ route('student.materials.index', $enrollment->course->id) }}"
                             class="text-blue-600 hover:underline mt-3 inline-block">Lihat Materi</a>
                     </div>
                 @endforeach

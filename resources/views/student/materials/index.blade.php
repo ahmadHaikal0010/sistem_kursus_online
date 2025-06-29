@@ -1,18 +1,29 @@
 @extends('layouts.app')
 
-@section('title', 'Materi - ' . $course->title)
+@section('title', 'Materi: ' . $course->title)
 
 @section('content')
-    <div class="container mx-auto px-4 py-10 max-w-3xl">
-        <h1 class="text-2xl font-bold mb-6">Materi: {{ $course->title }}</h1>
+    <div class="container mx-auto px-4 py-10 max-w-4xl">
+        <h1 class="text-2xl font-bold mb-6">Materi Kursus: {{ $course->title }}</h1>
 
-        @forelse ($course->materials as $material)
-            <div class="mb-6 bg-white p-4 rounded-xl shadow">
-                <h2 class="text-lg font-semibold">{{ $material->title }}</h2>
-                <div class="text-gray-700 mt-2 whitespace-pre-line">{{ $material->content }}</div>
-            </div>
-        @empty
-            <p class="text-gray-600">Belum ada materi untuk kursus ini.</p>
-        @endforelse
+        <div class="bg-white shadow rounded-lg divide-y">
+            @forelse ($materials as $material)
+                <div class="p-4 hover:bg-gray-50 flex justify-between">
+                    <div>
+                        <a href="{{ route('student.materials.show', [$course->id, $material->id]) }}"
+                            class="text-lg font-semibold text-blue-600 hover:underline">
+                            {{ $material->title }}
+                        </a>
+                        <p class="text-gray-600 text-sm">Tipe: {{ ucfirst($material->type) }}</p>
+                    </div>
+                </div>
+            @empty
+                <div class="p-4 text-gray-600">Belum ada materi tersedia.</div>
+            @endforelse
+        </div>
+
+        <div class="mt-6">
+            {{ $materials->links('vendor.pagination.tailwind') }}
+        </div>
     </div>
 @endsection

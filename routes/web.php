@@ -9,11 +9,14 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PublicCourseController;
 use App\Http\Controllers\student\StudentDashboardController;
+use App\Http\Controllers\student\StudentMaterialController;
 
 Route::get('/', [PublicCourseController::class, 'index']);
+
+Route::get('/courses', [PublicCourseController::class, 'courses'])->name('courses');
+Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
 
 // route auth
 Route::get('/login', [AuthController::class, 'loginForm'])->name('loginForm');
@@ -22,15 +25,13 @@ Route::get('/register', [AuthController::class, 'registerForm'])->name('register
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::get('/courses', [PublicCourseController::class, 'courses'])->name('courses');
-Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
-
 Route::middleware(['auth', RoleSiswa::class])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/courses', [CourseController::class, 'index'])->name('courses');
-    Route::get('/courses/{id}/material', [MaterialController::class, 'materials'])->name('courses.materials');
     Route::post('/courses/{id}/enroll', [EnrollmentController::class, 'enroll'])->name('courses.enroll');
+    Route::get('/courses/{course}/materials', [StudentMaterialController::class, 'index'])->name('materials.index');
+    Route::get('/courses/{course}/materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
 });
 
 Route::middleware(['auth', RoleAdmin::class])->prefix('admin')->name('admin.')->group(function () {
