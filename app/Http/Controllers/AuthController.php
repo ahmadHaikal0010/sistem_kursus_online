@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended('/dashboard'); // Ganti sesuai kebutuhan
+        return redirect()->intended(route('student.dashboard')); // Ganti sesuai kebutuhan
     }
 
     public function logout(Request $request): RedirectResponse
