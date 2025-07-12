@@ -46,4 +46,5 @@ Route::middleware(['auth', RoleAdmin::class])->prefix('admin')->name('admin.')->
     Route::get('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'show'])->name('courses.materials.show');
     Route::put('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'update'])->name('courses.materials.update');
     Route::delete('/courses/{course}/materials/{material}', [AdminMaterialController::class, 'destroy'])->name('courses.materials.destroy');
+    Route::delete('users/enrollments/{user}/{course}', [UserEnrollmentController::class, 'unenroll'])->name('users.enrollments.unenroll');
 });

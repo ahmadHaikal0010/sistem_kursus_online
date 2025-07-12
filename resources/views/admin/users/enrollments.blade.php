@@ -6,6 +6,12 @@
     <div class="max-w-6xl mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold mb-6">Daftar Pengguna & Kursus yang Diikuti</h1>
 
+        @if (session('success'))
+            <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
         {{-- Container utama tabel dengan rounded-xl dan shadow --}}
         <div class="overflow-x-auto bg-white rounded-xl shadow">
             {{-- Tabel dengan lebar minimum penuh dan layout otomatis --}}
@@ -34,9 +40,17 @@
                                 @else
                                     <ul class="list-disc pl-5">
                                         @foreach ($user->courses as $course)
-                                            <li>{{ $course->title }}
-                                                <span
-                                                    class="text-gray-500 text-xs">({{ $course->pivot->created_at->format('d M Y') }})</span>
+                                            <li class="flex justify-between">
+                                                <span>{{ $course->title }}
+                                                    ({{ $course->pivot->created_at->format('d M Y') }})
+                                                </span>
+                                                <form method="POST"
+                                                    action="{{ route('admin.users.enrollments.unenroll', [$user->id, $course->id]) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="text-red-600 text-xs hover:underline"
+                                                        onclick="return confirm('Yakin hapus enroll ini?')">Hapus</button>
+                                                </form>
                                             </li>
                                         @endforeach
                                     </ul>
