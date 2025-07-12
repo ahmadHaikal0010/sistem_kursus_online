@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Storage;
+use Exception;
 use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -31,7 +33,7 @@ class AdminCourseController extends Controller
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:haikal_categories,id',
             'description' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'thumbnail' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $data = $request->only('title', 'category_id', 'description');
@@ -77,8 +79,8 @@ class AdminCourseController extends Controller
         $data = $request->only('title', 'category_id', 'description');
 
         if ($request->hasFile('thumbnail')) {
-            if ($course->thumbnail && \Storage::disk('public')->exists($course->thumbnail)) {
-                \Storage::disk('public')->delete($course->thumbnail);
+            if ($course->thumbnail && Storage::disk('public')->exists($course->thumbnail)) {
+                Storage::disk('public')->delete($course->thumbnail);
             }
             $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
@@ -96,8 +98,8 @@ class AdminCourseController extends Controller
 
             $course->delete();
 
-            if ($course->thumbnail && \Storage::disk('public')->exists($course->thumbnail)) {
-                \Storage::disk('public')->delete($course->thumbnail);
+            if ($course->thumbnail && Storage::disk('public')->exists($course->thumbnail)) {
+                Storage::disk('public')->delete($course->thumbnail);
             }
 
             return redirect()->route('admin.courses.index')->with('success', 'Kursus berhasil dihapus.');
@@ -111,7 +113,7 @@ class AdminCourseController extends Controller
 
             // jika terjadi error yang lain
             return redirect()->route('admin.courses.index')->with('error', 'Terjadi kesalahan saat menghapus kursus.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('admin.courses.index')->with('error', 'Terjadi kesalahan tidak terduga saat menghapus kursus.');
         }
     }
