@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 use App\Models\Course;
 use App\Models\Category;

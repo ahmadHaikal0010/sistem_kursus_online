@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Material;
@@ -84,8 +85,8 @@ class AdminMaterialController extends Controller
 
         if ($request->type === 'video' && $request->hasFile('video_file')) {
             // hapus video lama
-            if ($material->video_path && \Storage::disk('public')->exists($material->video_path)) {
-                \Storage::disk('public')->delete($material->video_path);
+            if ($material->video_path && Storage::disk('public')->exists($material->video_path)) {
+                Storage::disk('public')->delete($material->video_path);
             }
             $material->video_path = $request->file('video_file')->store('videos', 'public');
         }
@@ -101,8 +102,8 @@ class AdminMaterialController extends Controller
         abort_unless($material->course_id === $course->id, 404);
 
         // hapus file video jika ada
-        if ($material->video_path && \Storage::disk('public')->exists($material->video_path)) {
-            \Storage::disk('public')->delete($material->video_path);
+        if ($material->video_path && Storage::disk('public')->exists($material->video_path)) {
+            Storage::disk('public')->delete($material->video_path);
         }
 
         $material->delete();

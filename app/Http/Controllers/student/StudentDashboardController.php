@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\student;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class StudentDashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         $courses = $user->courses()->with('materials')->paginate(10);
 
