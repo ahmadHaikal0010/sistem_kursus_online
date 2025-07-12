@@ -1,24 +1,68 @@
 @extends('layouts.app')
 
-@section('content')
-    <div class="container mx-auto py-5">
-        <div class="text-center mb-4">
-            <h1 class="text-3xl font-bold">Kursus Terbaru</h1>
-            <p class="text-gray-600">Tingkatkan kemampuanmu dengan kursus berkualitas</p>
-        </div>
+@section('title', 'Belajar Lebih Mudah - Kursus Online')
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            @foreach ($courses as $course)
-                <div class="bg-white rounded-xl shadow p-4 flex flex-col w-full">
-                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}"
-                        class="rounded-lg mb-3 h-40 w-full object-cover">
-                    <h2 class="text-xl font-semibold text-center">{{ $course->title }}</h2>
-                    <span class="text-sm text-gray-500 block text-center">{{ $course->category->name }}</span>
-                    <p class="mt-2 text-gray-700 text-center flex-grow">{{ Str::limit($course->description, 100) }}</p>
-                    <a href="{{ route('courses.show', $course->id) }}"
-                        class="inline-block mt-3 text-blue-500 hover:underline text-center">Lihat Detail</a>
+@section('content')
+    <div class="bg-white">
+
+        {{-- Hero Section --}}
+        <section class="relative bg-blue-600 text-white py-20 px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">Belajar Lebih Mudah & Efektif</h1>
+                <p class="text-lg md:text-xl mb-8">Akses kursus berkualitas tinggi kapan saja, di mana saja.</p>
+                <a href="{{ route('login') }}"
+                    class="bg-white text-blue-600 font-semibold px-6 py-3 rounded shadow hover:bg-gray-100 transition">
+                    Mulai Belajar Sekarang
+                </a>
+            </div>
+        </section>
+
+        {{-- Fitur Section --}}
+        <section class="py-16 px-4 bg-gray-50">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-12">Kenapa Pilih Platform Kami?</h2>
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+                        <h3 class="text-xl font-semibold mb-3">Akses Materi Interaktif</h3>
+                        <p class="text-gray-600">Teks, video, dan link pembelajaran terstruktur.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+                        <h3 class="text-xl font-semibold mb-3">Lacak Progress</h3>
+                        <p class="text-gray-600">Pantau kemajuan belajarmu dengan progress tracker real-time.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+                        <h3 class="text-xl font-semibold mb-3">Dashboard Siswa & Admin</h3>
+                        <p class="text-gray-600">Kontrol penuh bagi siswa maupun pengelola kursus.</p>
+                    </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        </section>
+
+        {{-- Kursus Terbaru --}}
+        <section class="py-16 px-4 bg-white">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-12">Kursus Terbaru</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    @foreach ($latestCourses as $course)
+                        <div class="bg-gray-50 p-5 rounded shadow hover:shadow-md transition text-left">
+                            <h3 class="text-xl font-semibold mb-2">{{ $course->title }}</h3>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($course->description, 80) }}</p>
+                            <a href="{{ route('courses.show', $course->id) }}"
+                                class="text-blue-600 font-semibold hover:underline">Lihat Kursus</a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        {{-- CTA Section --}}
+        <section class="bg-blue-600 text-white py-16 px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Gabung Sekarang dan Mulai Belajar!</h2>
+            <a href="{{ route('register') }}"
+                class="bg-white text-blue-600 px-6 py-3 rounded font-semibold hover:bg-gray-100 transition">
+                Daftar Gratis
+            </a>
+        </section>
+
     </div>
 @endsection

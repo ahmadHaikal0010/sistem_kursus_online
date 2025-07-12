@@ -8,9 +8,8 @@ class PublicCourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::with('category')->latest()->take(9)->get();
-
-        return view('home', compact('courses'));
+        $latestCourses = Course::latest()->take(3)->get();
+        return view('home', compact('latestCourses'));
     }
 
     public function courses()
